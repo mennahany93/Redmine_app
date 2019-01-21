@@ -10,8 +10,8 @@ WORKDIR /redmine
 
 COPY ./app/Gemfile Gemfile
 COPY ./app/Gemfile.lock Gemfile.lock
-COPY app .
 RUN bundle install
+COPY app .
 RUN gem install passenger
 COPY ./Passengerfile.json .
 RUN mkdir -p passengertmp
