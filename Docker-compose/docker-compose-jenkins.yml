@@ -1,0 +1,15 @@
+version: '3'
+services:
+ jenkins:
+   build:
+    context: .
+    dockerfile: Dockerfile_jenkins
+   container_name: jenkins_server
+   volumes:
+     - /var/lib/docker_volumes/jenkins:/var/lib/jenkins
+   networks:
+    docker-compose_redmine-static: 
+     ipv4_address: 172.25.0.2 
+networks:
+  docker-compose_redmine-static:
+    external: true
