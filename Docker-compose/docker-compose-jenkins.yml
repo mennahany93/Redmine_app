@@ -6,10 +6,10 @@ services:
     dockerfile: Dockerfile_jenkins
    container_name: jenkins_server
    volumes:
-     - /var/lib/docker_volumes/jenkins:/var/lib/jenkins
+     - ./jenkins_volume:/var/lib/jenkins
    networks:
-    docker-compose_redmine-static: 
-     ipv4_address: 172.25.0.2 
+    docker-compose_redmine-static:
+     ipv4_address: 172.25.0.2
 networks:
   docker-compose_redmine-static:
     external: true

@@ -1,2 +1,5 @@
 ### Redmine_app
-Clone app and docker-compose dir docker-compose up --build -d
+Clone Repo
+Copy app directory inside the Docker-compose directory
+docker-compose up --build -d "to build app"
+docker-compose -f docker-compose-jenkins.yml up -d "to build jenkins"
