@@ -8,7 +8,7 @@ services:
   ports:
     - '5432:5432'
   volumes:
-    - ./postgres-data:/var/lib/postgresql/data
+    - /var/lib/jenkins/postgres-data:/var/lib/postgresql/data
   networks:
    redmine-static:
     ipv4_address: 172.25.0.12
