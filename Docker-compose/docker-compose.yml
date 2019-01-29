@@ -14,9 +14,7 @@ services:
     ipv4_address: 172.25.0.12
 
  redmine:
-   build:
-    context: .
-    dockerfile: Dockerfile
+   image: docker-compose_redmine:latest
    container_name: redmine_app
    env_file: app.env
    networks:
