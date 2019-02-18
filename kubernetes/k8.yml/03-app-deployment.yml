@@ -1,0 +1,82 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redmine-app
+  labels:
+    app: redmine-app
+spec:
+  ports:
+    - port: 3000
+  selector:
+    app: redmine-app
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: redmine-app-pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/home/project/app"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redmine-app-pv-claim
+  labels:
+    app: redmine-app
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: redmine-app
+  labels:
+    app: redmine-app
+spec:
+  selector:
+    matchLabels:
+      app: redmine-app
+  template:
+    metadata:
+      labels:
+        app: redmine-app
+    spec:
+      containers:
+      - image: redmineimage
+        imagePullPolicy: Never
+        name: redmine-app
+        env:
+        - name: PGUSER
+          value: postgres
+        - name: DB_HOST_PRODUCTION
+          value: postgres
+        - name: DB_HOST_PRODUCTION
+          value: postgres
+        - name: PGPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: pgpassword
+              key: PGPASSWORD
+        ports:
+        - containerPort: 3000
+          name: redmine-app
+        volumeMounts:
+        - name: redmine-app-persistent-storage
+          mountPath: /var/lib/ruby-app
+      volumes:
+      - name: redmine-app-persistent-storage
+        persistentVolumeClaim:
+          claimName: redmine-app-pv-claim
