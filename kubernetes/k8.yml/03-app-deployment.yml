@@ -5,8 +5,10 @@ metadata:
   labels:
     app: redmine-app
 spec:
+  type: NodePort
   ports:
-    - port: 3000
+    - port: 8090
+      name: http
   selector:
     app: redmine-app
 ---
